@@ -1,0 +1,64 @@
+package java.com.example.mynews.ui.components
+
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.mynews.R
+import java.com.example.mynews.ui.MyNewsDestinations
+import java.com.example.mynews.ui.theme.MyNewsTheme
+
+@Composable
+fun AppNavRail(currentRoute: String, navigateToHome: () -> Unit, navigateToInterests: () -> Unit, modifier: Modifier = Modifier) {
+    NavigationRail(
+        header = {
+            Icon(
+                painterResource(R.drawable.ic_mynews_logo),
+                null,
+                Modifier.padding(vertical = 12.dp),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        },
+        modifier = modifier,
+    ) {
+        Spacer(Modifier.weight(1f))
+        NavigationRailItem(
+            selected = currentRoute == MyNewsDestinations.HOME_ROUTE,
+            onClick = navigateToHome,
+            icon = { Icon(painterResource(id = R.drawable.ic_home), stringResource(R.string.home_title)) },
+            label = { Text(stringResource(R.string.home_title)) },
+            alwaysShowLabel = false,
+        )
+        NavigationRailItem(
+            selected = currentRoute == MyNewsDestinations.INTERESTS_ROUTE,
+            onClick = navigateToInterests,
+            icon = { Icon(painterResource(id = R.drawable.ic_list_alt), stringResource(R.string.interests_title)) },
+            label = { Text(stringResource(R.string.interests_title)) },
+            alwaysShowLabel = false,
+        )
+        Spacer(Modifier.weight(1f))
+    }
+}
+
+@Preview("Drawer contents")
+@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewAppNavRail() {
+    MyNewsTheme {
+        AppNavRail(
+            currentRoute = MyNewsDestinations.HOME_ROUTE,
+            navigateToHome = {},
+            navigateToInterests = {},
+        )
+    }
+}
